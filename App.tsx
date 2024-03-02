@@ -24,7 +24,12 @@ export default function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <SafeAreaView>
-        <StatusBar style="light" />
+        <StatusBar
+          backgroundColor="transparent"
+          style="light"
+          translucent
+          animated
+        />
         <Groups />
       </SafeAreaView>
     </ThemeProvider>
