@@ -2,5 +2,5 @@ import styled from 'styled-components/native';
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.BLACK};
+  background-color: ${({ theme }) => theme.COLORS.GRAY_600};
 `;

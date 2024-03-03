@@ -7,7 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components';
 
 import { Loading } from '@components/Loading';
-import { Groups } from '@screens/Groups';
+import { NewGroup } from '@screens/NewGroup';
 import { defaultTheme } from '@theme/index';
 import { SafeAreaView } from '@theme/styles';
 
@@ -30,7 +30,10 @@ export default function App() {
           translucent
           animated
         />
-        <Groups />
+
+        {/* <Groups /> */}
+
+        <NewGroup />
       </SafeAreaView>
     </ThemeProvider>
   );
