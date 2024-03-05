@@ -1,13 +1,11 @@
-import { useTheme } from 'styled-components/native';
+import { defaultTheme } from '@theme/index';
 
 import { ActivityIndicator, Container } from './styles';
 
 export function Loading() {
-  const theme = useTheme();
-
   return (
-    <Container theme={theme}>
-      <ActivityIndicator theme={theme} />
+    <Container theme={defaultTheme}>
+      <ActivityIndicator theme={defaultTheme} />
     </Container>
   );
 }
