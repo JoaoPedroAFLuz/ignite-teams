@@ -2,7 +2,7 @@ import { TouchableOpacity } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
 interface Props {
-  danger: boolean;
+  danger?: boolean;
 }
 
 export const Container = styled(TouchableOpacity)<Props>`
