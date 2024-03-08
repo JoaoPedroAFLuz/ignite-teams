@@ -7,9 +7,10 @@ import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components';
 
 import { Loading } from '@components/Loading';
-import { NewGroup } from '@screens/NewGroup';
+import { Players } from '@screens/Players';
 import { defaultTheme } from '@theme/index';
 import { SafeAreaView } from '@theme/styles';
+import React from 'react';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -33,7 +34,9 @@ export default function App() {
 
         {/* <Groups /> */}
 
-        <NewGroup />
+        {/* <NewGroup /> */}
+
+        <Players />
       </SafeAreaView>
     </ThemeProvider>
   );
