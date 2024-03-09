@@ -1,12 +1,15 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 export interface Props {
   danger?: boolean;
 }
 
 export const Container = styled(TouchableOpacity)`
+  ${({ disabled }) => css`
+    opacity: ${disabled ? 0.5 : 1};
+  `}
   width: 56px;
   height: 56px;
 
