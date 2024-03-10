@@ -1,7 +1,10 @@
 import { UsersThree } from 'phosphor-react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled(KeyboardAvoidingView).attrs(() => ({
+  behavior: Platform.OS === 'ios' ? 'padding' : 'height',
+}))`
   flex: 1;
   padding: 24px;
 `;

@@ -7,9 +7,9 @@ interface ButtonProps extends TouchableOpacityProps {
   danger?: boolean;
 }
 
-export function Button({ title, danger, ...rest }: ButtonProps) {
+export function Button({ title, danger, disabled, ...rest }: ButtonProps) {
   return (
-    <Container danger={danger} {...rest}>
+    <Container danger={danger} disabled={disabled} {...rest}>
       <Title>{title}</Title>
     </Container>
   );

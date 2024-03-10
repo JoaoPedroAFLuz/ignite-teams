@@ -6,20 +6,29 @@ interface Props {
 }
 
 export const Container = styled(TouchableOpacity)<Props>`
-  ${({ theme, danger }) =>
+  ${({ theme, danger, disabled }) => css`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 56px;
+    max-height: 56px;
+
+    border-radius: 6px;
+
+    background-color: ${({ theme }) => theme.COLORS.GREEN_700};
+
+    ${danger &&
     css`
-      flex: 1;
-      justify-content: center;
-      align-items: center;
-
-      min-height: 56px;
-      max-height: 56px;
-
-      background-color: ${danger
-        ? theme.COLORS.RED_DARK
-        : theme.COLORS.GREEN_700};
-      border-radius: 6px;
+      background-color: ${theme.COLORS.RED_DARK};
     `}
+
+    ${disabled &&
+    css`
+      background-color: ${theme.COLORS.GRAY_300};
+      opacity: 0.5;
+    `}
+  `}
 `;
 
 export const Title = styled.Text`
