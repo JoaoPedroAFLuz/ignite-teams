@@ -11,6 +11,10 @@ export async function playerAddByGroup(
   group: string
 ) {
   try {
+    if (!newPlayer.name.trim()) {
+      throw new AppError('O nome do jogador é obrigatório.');
+    }
+
     const storedPlayers = await playersGetByGroup(group);
 
     const playerAlreadyExists = storedPlayers.find(

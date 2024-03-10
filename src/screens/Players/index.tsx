@@ -16,6 +16,7 @@ import { Highlight } from '@components/Highlight';
 import { Input } from '@components/Inputs';
 import { PlayerCard } from '@components/PlayerCard';
 
+import { playerRemoveByGroup } from '@storage/player/playerRemoveByGroup';
 import { Container, Form, HeaderList, NumberOfPlayers } from './styles';
 
 interface RouteParams {
@@ -49,10 +50,27 @@ export function Players() {
       newPlayerNameInputRef.current?.blur();
     } catch (error) {
       if (error instanceof AppError) {
-        return Alert.alert('Nova pessoa', error.message);
+        return Alert.alert('Novo jogador', error.message);
       }
-      Alert.alert('Nova pessoa', 'Não foi possível adicionar a pessoa.');
+      Alert.alert('Novo jogador', 'Não foi possível adicionar o jogador.');
 
+      console.error(error);
+    }
+  }
+
+  function handleRemovePlayer(playerName: string) {
+    Alert.alert('Remover', `Deseja remover ${playerName} da turma?`, [
+      { text: 'Não', style: 'cancel' },
+      { text: 'Sim', onPress: () => removePlayer(playerName) },
+    ]);
+  }
+
+  async function removePlayer(playerName: string) {
+    try {
+      await playerRemoveByGroup(playerName, group);
+      await fetchPlayersByTeam();
+    } catch (error) {
+      Alert.alert('Remover jogador', 'Não foi possível remover o jogador.');
       console.error(error);
     }
   }
@@ -63,7 +81,10 @@ export function Players() {
 
       setPlayers(players);
     } catch (error) {
-      Alert.alert('Pessoas', 'Não foi possível buscar as pessoas desse time');
+      Alert.alert(
+        'Jogadoes',
+        'Não foi possível buscar os jogadores desse time'
+      );
 
       console.error(error);
     }
@@ -84,8 +105,10 @@ export function Players() {
           inputRef={newPlayerNameInputRef}
           value={newPlayerName}
           onChangeText={setNewPlayerName}
-          placeholder="Nome da pessoa"
+          placeholder="Nome do jogador"
           autoCorrect={false}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType="done"
         />
 
         <ButtonIcon
@@ -116,10 +139,15 @@ export function Players() {
         data={players}
         keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
-          <PlayerCard name={item.name} onRemove={() => {}} />
+          <PlayerCard
+            name={item.name}
+            onRemove={() => {
+              handleRemovePlayer(item.name);
+            }}
+          />
         )}
         ListEmptyComponent={() => (
-          <EmptyList message="Não há pessoas nesse time." />
+          <EmptyList message="Não há jogadores nesse time." />
         )}
         contentContainerStyle={[
           { paddingBottom: 100 },

@@ -44,7 +44,7 @@ export function NewGroup() {
 
         <Highlight
           title="Nova turma"
-          subtitle="Crie a turma para adicionar as pessoas"
+          subtitle="Crie a turma para adicionar os jogadores"
         />
 
         <Input
