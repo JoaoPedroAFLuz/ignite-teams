@@ -5,17 +5,17 @@ import { AppError } from '@utils/AppError';
 import { GROUP_COLLECTION } from '../storageConfig';
 import { groupsGetAll } from './groupsGetAll';
 
-export async function groupCreate(newGroup: string) {
+export async function groupCreate(newGroupName: string) {
   try {
     const storedGroups = await groupsGetAll();
 
-    const groupAlreadyExists = storedGroups.includes(newGroup);
+    const groupAlreadyExists = storedGroups.includes(newGroupName);
 
     if (groupAlreadyExists) {
       throw new AppError('Já existe um grupo cadastrado com esse nome.');
     }
 
-    const storage = JSON.stringify([...storedGroups, newGroup]);
+    const storage = JSON.stringify([...storedGroups, newGroupName]);
 
     await AsyncStorage.setItem(GROUP_COLLECTION, storage);
   } catch (error) {

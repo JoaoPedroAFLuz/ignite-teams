@@ -5,10 +5,10 @@ import { playersGetByGroup } from './playersGetByGroup';
 
 export async function playerRemoveByGroup(
   playerName: string,
-  group: string
+  groupName: string
 ): Promise<PlayerStorageDTO[]> {
   try {
-    const players = await playersGetByGroup(group);
+    const players = await playersGetByGroup(groupName);
 
     const filteredPlayers = players.filter(
       (player) => player.name !== playerName
@@ -17,7 +17,7 @@ export async function playerRemoveByGroup(
     const filteredPlayersStorage = JSON.stringify(filteredPlayers);
 
     await AsyncStorage.setItem(
-      `${PLAYER_COLLECTION}-${group}`,
+      `${PLAYER_COLLECTION}-${groupName}`,
       filteredPlayersStorage
     );
 

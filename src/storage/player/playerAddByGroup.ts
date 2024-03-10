@@ -8,14 +8,14 @@ import { playersGetByGroup } from './playersGetByGroup';
 
 export async function playerAddByGroup(
   newPlayer: PlayerStorageDTO,
-  group: string
+  groupNaame: string
 ) {
   try {
     if (!newPlayer.name.trim()) {
       throw new AppError('O nome do jogador é obrigatório.');
     }
 
-    const storedPlayers = await playersGetByGroup(group);
+    const storedPlayers = await playersGetByGroup(groupNaame);
 
     const playerAlreadyExists = storedPlayers.find(
       (player) =>
@@ -30,7 +30,7 @@ export async function playerAddByGroup(
 
     const storage = JSON.stringify([...storedPlayers, newPlayer]);
 
-    await AsyncStorage.setItem(`${PLAYER_COLLECTION}-${group}`, storage);
+    await AsyncStorage.setItem(`${PLAYER_COLLECTION}-${groupNaame}`, storage);
   } catch (error) {
     throw error;
   }

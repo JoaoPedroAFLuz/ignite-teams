@@ -4,10 +4,12 @@ import { PLAYER_COLLECTION } from '@storage/storageConfig';
 import { PlayerStorageDTO } from './PlayerStorageDTO';
 
 export async function playersGetByGroup(
-  group: string
+  groupName: string
 ): Promise<PlayerStorageDTO[]> {
   try {
-    const storage = await AsyncStorage.getItem(`${PLAYER_COLLECTION}-${group}`);
+    const storage = await AsyncStorage.getItem(
+      `${PLAYER_COLLECTION}-${groupName}`
+    );
 
     return storage ? JSON.parse(storage) : [];
   } catch (error) {
