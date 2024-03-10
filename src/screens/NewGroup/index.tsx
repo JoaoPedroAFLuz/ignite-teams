@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 
+import { groupCreate } from '@storage/group/groupCreate';
+
 import { Button } from '@components/Button';
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
@@ -13,9 +15,15 @@ export function NewGroup() {
 
   const navigation = useNavigation();
 
-  const handleNewGroup = () => {
-    navigation.navigate('Players', { group });
-  };
+  async function handleNewGroup() {
+    try {
+      await groupCreate(group);
+
+      navigation.navigate('Players', { group });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Container>
