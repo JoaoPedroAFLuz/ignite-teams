@@ -1,8 +1,8 @@
 import { Button } from '@components/Button';
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
-
 import { Input } from '@components/Inputs';
+
 import { Container, Content, Icon } from './styles';
 
 export function NewGroup() {
