@@ -6,11 +6,12 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components';
 
-import { Loading } from '@components/Loading';
 import { Routes } from '@routes/index';
 
+import { Loading } from '@components/Loading';
+import { SafeAreaView } from '@components/SafeAreaView/styles';
+
 import { defaultTheme } from '@theme/index';
-import { SafeAreaView } from '@theme/styles';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
