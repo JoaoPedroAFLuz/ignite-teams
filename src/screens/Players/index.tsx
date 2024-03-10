@@ -2,15 +2,20 @@ import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { Alert, FlatList } from 'react-native';
 
+import { PlayerStorageDTO } from '@storage/player/PlayerStorageDTO';
+import { playerAddByGroup } from '@storage/player/playerAddByGroup';
+import { playersGetByGroup } from '@storage/player/playersGetByGroup';
+import { AppError } from '@utils/AppError';
+
 import { Button } from '@components/Button';
 import { ButtonIcon } from '@components/ButtonIcon';
 import { EmptyList } from '@components/EmptyList';
 import { Filter } from '@components/Filter';
+import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
 import { Input } from '@components/Inputs';
 import { PlayerCard } from '@components/PlayerCard';
 
-import { Header } from '@components/Header';
 import { Container, Form, HeaderList, NumberOfPlayers } from './styles';
 
 interface RouteParams {
@@ -18,26 +23,38 @@ interface RouteParams {
 }
 
 export function Players() {
-  const [playerName, setPlayerName] = useState('');
-  const [team, setTeam] = useState<string>('Time A');
-  const [groups] = useState<string[]>(['Time A', 'Time B', 'Time C']);
+  const [newPlayerName, setNewPlayerName] = useState('');
+  const [teams] = useState<string[]>(['Time A', 'Time B']);
+  const [team, setTeam] = useState('Time A');
   const [players, setPlayers] = useState<string[]>([]);
 
   const route = useRoute();
   const { group } = route.params as RouteParams;
 
-  function handleAddPlayer() {
-    const player = playerName.trim();
+  async function handleAddPlayer() {
+    try {
+      const playerName = newPlayerName.trim();
 
-    if (players.includes(player)) {
-      return Alert.alert(
-        'Jogador já cadastrado',
-        'Já existe um jogador com esse nome.'
-      );
+      const newPlayer: PlayerStorageDTO = {
+        name: playerName,
+        team,
+      };
+
+      await playerAddByGroup(newPlayer, group);
+
+      const players = await playersGetByGroup(group);
+
+      setPlayers(players.map((player) => player.name));
+
+      setNewPlayerName('');
+    } catch (error) {
+      if (error instanceof AppError) {
+        return Alert.alert('Nova pessoa', error.message);
+      }
+      Alert.alert('Nova pessoa', 'Não foi possível adicionar a pessoa.');
+
+      console.error(error);
     }
-
-    setPlayers((prevState) => [...prevState, playerName]);
-    setPlayerName('');
   }
 
   function handleRemovePlayer(name: string) {
@@ -64,8 +81,8 @@ export function Players() {
 
       <Form>
         <Input
-          value={playerName}
-          onChangeText={setPlayerName}
+          value={newPlayerName}
+          onChangeText={setNewPlayerName}
           placeholder="Nome da pessoa"
           autoCorrect={false}
         />
@@ -73,13 +90,13 @@ export function Players() {
         <ButtonIcon
           icon="add"
           onPress={handleAddPlayer}
-          disabled={!playerName}
+          disabled={!newPlayerName.trim()}
         />
       </Form>
 
       <HeaderList>
         <FlatList
-          data={groups}
+          data={teams}
           horizontal
           keyExtractor={(item) => item}
           renderItem={({ item }) => (

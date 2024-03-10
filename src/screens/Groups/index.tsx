@@ -2,7 +2,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
 
-import { groupGetAll } from '@storage/group/groupGetAll';
+import { groupsGetAll } from '@storage/group/groupsGetAll';
 
 import { Button } from '@components/Button';
 import { EmptyList } from '@components/EmptyList';
@@ -17,17 +17,21 @@ export function Groups() {
 
   const navigation = useNavigation();
 
+  function handleOpenGroup(group: string) {
+    navigation.navigate('Players', { group });
+  }
+
   function handleNewGroup() {
     navigation.navigate('NewGroup');
   }
 
   async function fetchGroups() {
     try {
-      const groups = await groupGetAll();
+      const groups = await groupsGetAll();
 
       setGroups(groups);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -46,11 +50,13 @@ export function Groups() {
       <FlatList
         data={groups}
         keyExtractor={(item) => item}
-        renderItem={({ item }) => <GroupCard title={item} />}
-        contentContainerStyle={groups.length === 0 && { flex: 1 }}
+        renderItem={({ item }) => (
+          <GroupCard title={item} onPress={() => handleOpenGroup(item)} />
+        )}
         ListEmptyComponent={() => (
           <EmptyList message="Que tal criar uma nova turma?" />
         )}
+        contentContainerStyle={groups.length === 0 && { flex: 1 }}
       />
 
       <Button title="Criar nova turma" onPress={handleNewGroup} />

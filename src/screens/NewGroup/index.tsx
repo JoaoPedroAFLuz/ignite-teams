@@ -13,11 +13,13 @@ import { Input } from '@components/Inputs';
 import { Container, Content, Icon } from './styles';
 
 export function NewGroup() {
-  const [group, setGroup] = useState('');
+  const [newGroupName, setNewGroupName] = useState('');
 
   const navigation = useNavigation();
 
   async function handleNewGroup() {
+    const group = newGroupName.trim();
+
     try {
       await groupCreate(group);
 
@@ -29,7 +31,7 @@ export function NewGroup() {
 
       Alert.alert('Nova turma', 'Não foi possível criar uma nova turma');
 
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -46,16 +48,16 @@ export function NewGroup() {
         />
 
         <Input
-          value={group}
+          value={newGroupName}
           placeholder="Nome da turma"
-          onChangeText={setGroup}
+          onChangeText={setNewGroupName}
         />
 
         <Button
           title="Criar"
           style={{ marginTop: 20 }}
           onPress={handleNewGroup}
-          disabled={!group.trim()}
+          disabled={!newGroupName.trim()}
         />
       </Content>
     </Container>
