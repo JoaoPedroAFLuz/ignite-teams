@@ -3,8 +3,8 @@ export const defaultTheme = {
     WHITE: '#FFFFFF',
     BLACK: '#000000',
 
-    GREEN_700: '#00875F',
     GREEN_500: '#00B37E',
+    GREEN_700: '#00875F',
 
     RED: '#F75A68',
     RED_DARK: '#AA2834',
