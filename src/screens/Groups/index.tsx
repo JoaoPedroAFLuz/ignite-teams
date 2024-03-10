@@ -45,7 +45,7 @@ export function Groups() {
     <Container>
       <Header />
 
-      <Highlight title="Turmas" subtitle="jogue com a sua turma" />
+      <Highlight title="Turmas" subtitle="Jogue com a sua turma" />
 
       <FlatList
         data={groups}

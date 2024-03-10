@@ -14,7 +14,8 @@ export async function playerAddByGroup(
     const storedPlayers = await playersGetByGroup(group);
 
     const playerAlreadyExists = storedPlayers.find(
-      (player) => player.name === newPlayer.name
+      (player) =>
+        player.name === newPlayer.name && player.team === newPlayer.team
     );
 
     if (playerAlreadyExists) {
